@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+
+
+{% block content %}
+
+<div class="container">
+
+  
+  <div style="background-color:#efefef;height:150px;width:400px;margin-left:320px;margin-top:130px;">
+    
+    <h1 style="font-family:'Montserrat';text-align:center;"><strong>Update Here </stromg></h1>
+    <div class="table table-dark" style="padding:10px;">
+    <form method="POST" style="color:#efefef;"> 
+    {% csrf_token %}
+    <h4 style="text-align:center;">Alias :- <strong>{{ins}}</strong></h4>
+    {% bootstrap_form user_form %}
+
+    <input type="submit" class="btn btn-primary" value="Update" style="margin-left:150px;">
+  </form>
+</div>
+</div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LiteUrl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+  <body>
+
+    <div style="margin-top: auto;height: 50%;font-size: 50px;font-family: 'Montserrat Alternates', sans-serif;color: #e30000;background:#efefef">
+            <span style="margin-left: 3%;">LiteUrl</span>
+            
+            <span style="font-size:20px;">
+            {% if user.is_authenticated %}
+                 <!--span style="margin-left: 55%;color: blue;">Hi..{{ user.first_name }}</span-->
+                <a href="{% url 'account:logout' %}" style="margin-left: 75%;">LogOut</a>
+            {% else %}
+                <a href="{% url 'account:signup' %}" style="margin-left: 65%;">SignUp</a>
+                <a href="{% url 'account:login' %}" style="margin-left: 1%;">LogIn</a>
+            {% endif %}
+            </span>
+    </div>
+
+    {% block nav %}
+      
+    {% if user.is_authenticated %}
+    <div class="container">
+      {% block content %}
+      <div class="container">
+
+
+        <div style="background-color:#efefef;height:250px;width:400px;margin-left:320px;margin-top:50px;">
+        
+          <h1 style="font-family:'Montserrat';text-align:center;"><strong>Make Url Short Here</stromg></h1>
+          <div class="table table-dark" style="padding:10px;">
+          <form method="POST" style="color:#efefef;"> 
+          {% csrf_token %}
+          {% bootstrap_form user_form %}
+      
+          <input type="submit" class="btn btn-primary" value="Create" style="margin-left:150px;">
+        </form>
+          </div>
+      </div>
+      {% endblock %}
+        </div>
+
+
+
+
+
+        
+      
+
+      <div class="container" style="background-color: #efefef;margin-top: 150px;">
+      <h3 style="font-family:'Montserrat';text-align:center;padding-top: 15px;"><strong>{{ user.first_name }}, Here is your short urls.</strong></h3>
+      
+      <table class="table table-dark" style="text-align:center;margin-bottom:100px;">
+        <thead>
+          <tr>
+            <th scope="col">Alias</th>
+            <th scope="col">Url</th>
+            <th scope="col">Total Hit</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <th>domain/{{ i.alias }}</th>
+            <td> <a href="{{ i.link }}" target="_blank">{{ i.link }}</a> </td>
+            <td>{{ i.hit }}</td>
+            <td><a href="{% url 'myapp:urlUpdate' pk=i.pk %}" class="btn btn-success">Change</a></td>
+            <td><a href="{% url 'myapp:aliasDelete' pk=i.pk %}" class="btn btn-danger">Delete</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    {% else %}
+
+    {% endif %}
+    {% endblock %}
+    
+    
+    <style>
+      .footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: 10%;
+    background-color: #efefef;
+    text-align: center;
+}
+    </style>
+    <div class="footer" >
+      <a href="mailto:saurabh12singh11@gmail.com" target="_blank"  class="btn-floating btn-lg btn-email" type="button" role="button" style="color: black"><i class="fa fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/saurabh-singh-ba5301158/" target="_blank" class="btn-floating btn-lg btn-fb" type="button" role="button" style="color: black"><i class="fa fa-linkedin"></i></a>
+      <a href="https://github.com/97saurabh" target="_blank" class="btn-floating btn-lg btn-fb" type="button" role="button" style="color: black"><i class="fa fa-github"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=100006109419616" target="_blank" class="btn-floating btn-lg btn-fb" type="button" role="button" style="color: black"><i class="fa fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/12_saurabh_singh_11/" target="_blank" class="btn-floating btn-lg btn-fb" type="button" role="button" style="color: black"><i class="fa fa-instagram"></i></a>
+
+      
+      
+    </div>
+
+
+  </body>
+</html>
